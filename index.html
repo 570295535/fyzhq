@@ -1,0 +1,109 @@
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>发音转换器</title>
+    <link rel="stylesheet" href="./static/css/index.min.css" />
+    <link rel="stylesheet" href="./static/css/base.css">
+    <link rel="stylesheet" href="./static/css/bbk.css">
+    <meta name="viewport" content="width=device-width,user-scalable=0">
+</head>
+
+<body>
+    <div id="app" style="width:100%;">
+        <div>
+            <label style="text-align:left;"><input @input="convert(input)" type="radio" name="language_type" value="0" checked />日语</label>
+            <label style="text-align:left;"><input @input="convert(input)" type="radio" name="language_type" value="1" />德语</label>
+            <label style="text-align:left;"><input @input="convert(input)" type="radio" name="language_type" value="2" />法语</label>
+            <label style="text-align:left;"><input @input="convert(input)" type="radio" name="language_type" value="3" />韩语</label>
+            <label style="text-align:left;"><input @input="convert(input)" type="radio" name="language_type" value="4" />俄语</label>
+            <label style="text-align:left;"><input @input="convert(input)" type="radio" name="language_type" value="5" />泰语</label>
+            <label style="text-align:left;"><input @input="convert(input)" type="radio" name="language_type" value="6" />英语</label>
+        </div>
+        </br>
+        <div id="el"><textarea placeholder="输入想转换的文字" v-model="input" @input="convert(input)"></textarea></div>
+		<br>
+        <div id="el"><textarea readonly="readonly" v-model="result" id="zhuan_ok" onclick="this.focus();this.select()"></textarea></div>
+		<br><div id="bf" onclick="playMusic()">▶</div><br><p>不支持【俄语、泰语】预览收听，请复制后用<a href="https://fanyi.baidu.com/" target="_blank">【百度翻译】</a>收听</p>
+    </div>
+    <script src="./static/js/vue.global.min.js"></script>
+    <script src="./static/js/index.full.min.js"></script>
+    <script src="./static/js/pinyin_dict_notone.js"></script>
+    <script src="./static/js/pinyinUtil.js"></script>
+    <script>
+        let data;
+        fetch('./data/language.json').then(data => data.json()).then(_data => {
+            data = _data;
+        });
+        const words = {
+            data() {
+                return {
+                    input: "",
+                    result: ""
+                }
+            },
+            methods: {
+                //失去焦点进行转换
+                convert(input) {
+                    let type = document.querySelector('[name="language_type"]:checked').value;
+                    if (type == "0") {
+                        cur_data = data['Japanese']
+                    }
+                    else if (type == "1") {
+                        cur_data = data['German']
+                    }
+                    else if (type == "2") {
+                        cur_data = data['French']
+                    }
+                    else if (type == "3") {
+                        cur_data = data['Korean']
+                    }
+                    else if (type == "4") {
+                        cur_data = data['Russian']
+                    }
+                    else if (type == "5") {
+                        cur_data = data['Thai']
+                    }
+                    else if (type == "6") {
+                        cur_data = data['English']
+                    }
+
+                    pinyin = pinyinUtil.getPinyin(input).split(" ");
+                    // console.log(pinyin)
+
+                    this.result = ""
+                    for (let i = 0; i < pinyin.length; i++) {
+                        if (cur_data[pinyin[i]]) {
+                            this.result += cur_data[pinyin[i]];
+                            if (type != 'Japanese') {
+                                this.result += ' '
+                            }
+                        }
+                        else {
+                            this.result += pinyin[i]
+                        }
+                    }
+                }
+            }
+        }
+        const create_button = Vue.createApp(words);
+        create_button.use(ElementPlus);
+        create_button.mount("#app");
+
+var djcs=0;
+function playMusic(){
+var aa=document.getElementById("zhuan_ok").value;
+var music = new Audio('http://dict.youdao.com/dictvoice?audio='+aa+'&le=auto&sj='+new Date().getTime());
+music.onended = function() {
+    music.load();document.getElementById("bf").innerHTML='▶';
+	djcs=0;
+};
+   if(djcs>0){
+       music.load();document.getElementById("bf").innerHTML='▶';
+	   djcs=0;
+   }else{
+       music.play();document.getElementById("bf").innerHTML='◼';
+       djcs++;
+   }
+}
+    </script>
