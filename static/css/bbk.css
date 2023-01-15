@@ -1,0 +1,45 @@
+html{
+	background: #efefef;
+}
+body{
+	max-width: 800px;
+	margin:0 auto;
+}
+head{
+	display: block;
+	text-align: center;
+	padding:10px 0;
+
+}
+title{
+	display: block;
+	font-weight:bold;
+	font-size:2em;
+
+}
+meta[name="discription"]{
+	display: block;
+	padding:.5em 0;
+	color:#999;
+}
+meta[name="discription"]:after{
+	content: attr(content);
+}
+textarea{
+	display: block;
+	border:0;
+	width:calc(100%);
+	min-height:160px;
+	padding:10px 14px;
+	box-shadow:0 0 0 2px #999 inset;
+}
+#bf{
+	padding: 5px 0;
+    box-shadow: 0 0 0 2px #008dbf inset;
+    width: calc(100%);
+    text-align: center;
+    background: #00aeec;
+    color: #000;
+    border-radius: 10px;
+	font-size: 30px;
+}
