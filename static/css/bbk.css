@@ -4,7 +4,8 @@ html{
 body{
 	max-width: 800px;
 	margin:0 auto;
-	padding:5%;
+	padding-left: 10px;
+    padding-right: 10px;
 }
 head{
 	display: block;
@@ -30,12 +31,12 @@ textarea{
 	display: block;
 	border:0;
 	width:calc(100%);
-	min-height:160px;
+	min-height:140px;
 	padding:10px 14px;
 	box-shadow:0 0 0 2px #999 inset;
 }
 #bf{
-	padding: 5px 0;
+	height: 45px;
     box-shadow: 0 0 0 2px #008dbf inset;
     width: calc(100%);
     text-align: center;
