@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>发音转换器</title>
+    <title>发音转换器改进版</title>
     <link rel="stylesheet" href="./static/style.css">
     <meta name="viewport" content="width=device-width,user-scalable=0">
 </head>
@@ -15,17 +15,18 @@
             <label style="text-align:left;"><input @input="convert(input)" type="radio" name="language_type" value="1" />德语</label>
             <label style="text-align:left;"><input @input="convert(input)" type="radio" name="language_type" value="2" />法语</label>
             <label style="text-align:left;"><input @input="convert(input)" type="radio" name="language_type" value="3" />韩语</label>
-            <label style="text-align:left;color:#bfbfbf;"><input @input="convert(input)" type="radio" name="language_type" value="4" />俄语</label>
-            <label style="text-align:left;color:#bfbfbf;"><input @input="convert(input)" type="radio" name="language_type" value="5" />泰语</label>
+            <label style="text-align:left;"><input @input="convert(input)" type="radio" name="language_type" value="4" />俄语</label>
+            <label style="text-align:left;"><input @input="convert(input)" type="radio" name="language_type" value="5" />泰语</label>
             <label style="text-align:left;"><input @input="convert(input)" type="radio" name="language_type" value="6" />英语</label>
         </div>
         </br>
-        <div id="el"><textarea placeholder="输入想转换的文字" v-model="input" @input="convert(input)" onclick="this.focus();this.select()"></textarea></div>
+        <div id="el"><textarea placeholder="输入想转换的文字" v-model="input" @input="convert(input)"></textarea></div>
 		<br>
         <div id="el"><textarea readonly="readonly" v-model="result" id="zhuan_ok" onclick="this.focus();this.select()"></textarea></div>
 		<br><div id="bf" onclick="playMusic()">▶</div>
-		<p style="text-align:center;">当前不支持【俄语、泰语】预览收听</p>
-		<p style="text-align:center;">请复制后用<a href="https://fanyi.baidu.com/" target="_blank">【百度翻译】</a>收听</p>
+		
+		<p style="text-align:center;">当前语音引擎来自：有道、百度</p>
+		<p style="text-align:center;">开源地址：<a target="_blank" href="https://github.com/570295535/fyzhq" >https://github.com/570295535/fyzhq</a></p>
     </div>
     <script src="./static/vue.global.min.js"></script>
     <script src="./static/index.full.min.js"></script>
@@ -95,15 +96,30 @@ var djcs=0;
 function playMusic(){
    var aa=encodeURI(document.getElementById("zhuan_ok").value);//转换好的文字
    if (!aa) {var aa=encodeURI("你还没有输入内容");}//如果是空的，就使用默认语音文字
-   var music="<audio controls=\'controls\' hidden=\'hidden\' id=\'myAudio\' autoplay=\'autoplay\'><source src=\'//dict.youdao.com/dictvoice?audio="+aa+"&le=auto&sj="+new Date().getTime()+"\' type=\'audio/mp3\' /></audio>";
-   if(djcs<1){//点击播放按钮1次，加入播放，修改按钮样式，累计数字+1
-      document.getElementById("yuyin").innerHTML=music;document.getElementById("bf").innerHTML='◼';djcs++;
-	  //监听播放完毕，就修改按钮样式，累计数字归零
-	  document.getElementById("myAudio").onended = function() {document.getElementById("bf").innerHTML='▶';djcs=0;};
-   } else {//点击播放按钮2次，停止播放，修改按钮样式，累计数字归零
-      document.getElementById("yuyin").innerHTML='';document.getElementById("bf").innerHTML='▶';djcs=0;
+   var type = document.querySelector('[name="language_type"]:checked').value;
+   if (type == "4") {//如果是俄语
+       if(djcs<1){//防止过多点击重复播放，开始播放，修改按钮样式，累计数字+1
+          var music = new Audio("//tts.baidu.com/text2audio?tex="+aa+"&cuid=dict&lan=ru&ctp=1&pdt=30&vol=9&per=4100");
+          music.play();document.getElementById("bf").innerHTML='◼';djcs++;
+	      //监听播放完毕，就修改按钮样式，累计数字归零
+	      music.onended = function() {document.getElementById("bf").innerHTML='▶';djcs=0;}
+       }
+   }else if (type == "5") {//如果是泰语
+       if(djcs<1){//防止过多点击重复播放，开始播放，修改按钮样式，累计数字+1
+          var music = new Audio("//tts.baidu.com/text2audio?tex="+aa+"&cuid=dict&lan=th&ctp=1&pdt=30&vol=9&per=4100");
+          music.play();document.getElementById("bf").innerHTML='◼';djcs++;
+	      //监听播放完毕，就修改按钮样式，累计数字归零
+	      music.onended = function() {document.getElementById("bf").innerHTML='▶';djcs=0;}
+       }
+   }else{//如果是其他语言
+       if(djcs<1){//防止过多点击重复播放，开始播放，修改按钮样式，累计数字+1
+          var music = new Audio("//dict.youdao.com/dictvoice?audio="+aa+"&le=auto&sj="+new Date().getTime());
+          music.play();document.getElementById("bf").innerHTML='◼';djcs++;
+	      //监听播放完毕，就修改按钮样式，累计数字归零
+	      music.onended = function() {document.getElementById("bf").innerHTML='▶';djcs=0;}
+       }
    }
 }
-    </script><span id="yuyin"></span>
+    </script>
 </body>
 </html>
