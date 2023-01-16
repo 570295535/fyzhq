@@ -24,7 +24,9 @@
         <div id="el"><textarea placeholder="输入想转换的文字" v-model="input" @input="convert(input)"></textarea></div>
 		<br>
         <div id="el"><textarea readonly="readonly" v-model="result" id="zhuan_ok" onclick="this.focus();this.select()"></textarea></div>
-		<br><div id="bf" onclick="playMusic()">▶</div><br><p>不支持【俄语、泰语】预览收听，请复制后用<a href="https://fanyi.baidu.com/" target="_blank">【百度翻译】</a>收听</p>
+		<br><div id="bf" onclick="playMusic()">▶</div>
+		<p style="text-align:center;">当前不支持【俄语、泰语】预览收听</p>
+		<p style="text-align:center;">请复制后用<a href="https://fanyi.baidu.com/" target="_blank">【百度翻译】</a>收听</p>
     </div>
     <script src="./static/js/vue.global.min.js"></script>
     <script src="./static/js/index.full.min.js"></script>
