@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>发音转换器</title>
+    <link rel="stylesheet" href="./static/bbk.css">
+    <meta name="viewport" content="width=device-width,user-scalable=0">
+</head>
+
+<body>
+    <div id="app" style="width:100%;">
+        <div>
+            <label style="text-align:left;"><input @input="convert(input)" type="radio" name="language_type" value="0" checked />日语</label>
+            <label style="text-align:left;"><input @input="convert(input)" type="radio" name="language_type" value="1" />德语</label>
+            <label style="text-align:left;"><input @input="convert(input)" type="radio" name="language_type" value="2" />法语</label>
+            <label style="text-align:left;"><input @input="convert(input)" type="radio" name="language_type" value="3" />韩语</label>
+            <label style="text-align:left;color:#bfbfbf;"><input @input="convert(input)" type="radio" name="language_type" value="4" />俄语</label>
+            <label style="text-align:left;color:#bfbfbf;"><input @input="convert(input)" type="radio" name="language_type" value="5" />泰语</label>
+            <label style="text-align:left;"><input @input="convert(input)" type="radio" name="language_type" value="6" />英语</label>
+        </div>
+        </br>
+        <div id="el"><textarea placeholder="输入想转换的文字" v-model="input" @input="convert(input)" onclick="this.focus();this.select()"></textarea></div>
+		<br>
+        <div id="el"><textarea readonly="readonly" v-model="result" id="zhuan_ok" onclick="this.focus();this.select()"></textarea></div>
+		<br><div id="bf" onclick="playMusic()">▶</div>
+		<p style="text-align:center;">当前不支持【俄语、泰语】预览收听</p>
+		<p style="text-align:center;">请复制后用<a href="https://fanyi.baidu.com/" target="_blank">【百度翻译】</a>收听</p>
+    </div>
+    <script src="./static/vue.global.min.js"></script>
+    <script src="./static/index.full.min.js"></script>
+    <script src="./static/pinyin_dict_notone.js"></script>
+    <script src="./static/pinyinUtil.js"></script>
+    <script>
+        let data;
+        fetch('./static/language.json').then(data => data.json()).then(_data => {
+            data = _data;
+        });
+        const words = {
+            data() {
+                return {
+                    input: "",
+                    result: ""
+                }
+            },
+            methods: {
+                //输入的值变化了就触发转换
+                convert(input) {
+                    let type = document.querySelector('[name="language_type"]:checked').value;
+                    if (type == "0") {
+                        cur_data = data['Japanese']
+                    }
+                    else if (type == "1") {
+                        cur_data = data['German']
+                    }
+                    else if (type == "2") {
+                        cur_data = data['French']
+                    }
+                    else if (type == "3") {
+                        cur_data = data['Korean']
+                    }
+                    else if (type == "4") {
+                        cur_data = data['Russian']
+                    }
+                    else if (type == "5") {
+                        cur_data = data['Thai']
+                    }
+                    else if (type == "6") {
+                        cur_data = data['English']
+                    }
+
+                    pinyin = pinyinUtil.getPinyin(input).split(" ");
+                    // console.log(pinyin)
+
+                    this.result = ""
+                    for (let i = 0; i < pinyin.length; i++) {
+                        if (cur_data[pinyin[i]]) {
+                            this.result += cur_data[pinyin[i]];
+                            if (type != 'Japanese') {
+                                this.result += ' '
+                            }
+                        }
+                        else {
+                            this.result += pinyin[i]
+                        }
+                    }
+                }
+            }
+        }
+        const create_button = Vue.createApp(words);
+        create_button.use(ElementPlus);
+        create_button.mount("#app");
+//点击播放就把转换的文字转语音播放
+var djcs=0;
+function playMusic(){
+   var aa=encodeURI(document.getElementById("zhuan_ok").value);//转换好的文字
+   if (!aa) {var aa=encodeURI("你还没有输入内容");}//如果是空的，就使用默认语音文字
+   var music="<audio controls=\'controls\' hidden=\'hidden\' id=\'myAudio\' autoplay=\'autoplay\'><source src=\'//dict.youdao.com/dictvoice?audio="+aa+"&le=auto&sj="+new Date().getTime()+"\' type=\'audio/mp3\' /></audio>";
+   if(djcs<1){//点击播放按钮1次，加入播放，修改按钮样式，累计数字+1
+      document.getElementById("yuyin").innerHTML=music;document.getElementById("bf").innerHTML='◼';djcs++;
+	  //监听播放完毕，就修改按钮样式，累计数字归零
+	  document.getElementById("myAudio").onended = function() {document.getElementById("bf").innerHTML='▶';djcs=0;};
+   } else {//点击播放按钮2次，停止播放，修改按钮样式，累计数字归零
+      document.getElementById("yuyin").innerHTML='';document.getElementById("bf").innerHTML='▶';djcs=0;
+   }
+}
+    </script><span id="yuyin"></span>
+</body>
+</html>
