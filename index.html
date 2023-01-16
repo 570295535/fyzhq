@@ -43,7 +43,7 @@
                 }
             },
             methods: {
-                //失去焦点进行转换
+                //输入的值变化了就触发转换
                 convert(input) {
                     let type = document.querySelector('[name="language_type"]:checked').value;
                     if (type == "0") {
@@ -89,7 +89,7 @@
         const create_button = Vue.createApp(words);
         create_button.use(ElementPlus);
         create_button.mount("#app");
-
+//点击播放预览音频
 var djcs=0;
 function playMusic(){
 var aa=document.getElementById("zhuan_ok").value;
@@ -107,3 +107,5 @@ music.onended = function() {
    }
 }
     </script>
+</body>
+</html>
