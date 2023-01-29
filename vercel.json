@@ -2,7 +2,6 @@
   "version": 2,
   "routes": [
     { "handle": "filesystem" },
-    { "regions": "hkg1" },
     { "src": "/(.*)", "status": 404, "dest": "/404.html" }
   ]
 }
