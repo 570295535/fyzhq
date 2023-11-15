@@ -22,7 +22,7 @@
   
 由于原项目使用太痛苦，我才做了这个改进版，现在使用起来舒服多了。
   
-![Image text](https://z1.ax1x.com/2023/11/15/piYRdUJ.jpg)
+![Image text](https://z1.ax1x.com/2023/11/15/piYR58I.jpg)
   
   
 
