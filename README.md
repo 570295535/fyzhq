@@ -3,7 +3,7 @@
 发音转换器，可将输入的中文，根据发音转换为相同声调的外语，以达到用外语说中文的效果。
   
   
-改进版使用地址：https://fyzhq.dfjgmc.com/
+改进版使用地址：[https://fyzhq.2bbbb.dynv6.net/](https://fyzhq.2bbbb.dynv6.net/)
   
 改进：
   
