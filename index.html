@@ -66,7 +66,7 @@
                     }
                     else if (type == "4") {
                         cur_data = data['Russian']
-						document.getElementById("bf").innerHTML='暂不支持播放俄语';
+						document.getElementById("bf").innerHTML='暂不支持俄语';
                     }
                     else if (type == "5") {
                         cur_data = data['Thai']
@@ -104,9 +104,9 @@ function playMusic(){
     var aa=encodeURI(document.getElementById("zhuan_ok").value);//转换好的文字
     if (!aa) {var aa=encodeURI("你还没有输入内容");}//如果是空的，就使用默认语音文字
     var type = document.querySelector('[name="language_type"]:checked').value;
-    if(djcs<1){//防止过多点击重复播放，开始播放，修改按钮样式，累计数字+1
+    if(djcs<1){//防止过多点击重复播放
         if(type == "4"){
-			document.getElementById("bf").innerHTML='暂不支持播放俄语';
+			document.getElementById("bf").innerHTML='暂不支持俄语';
 		}else{
 		    var music = new Audio("//dict.youdao.com/dictvoice?audio="+aa+"&le=auto&sj="+new Date().getTime());
             music.play();document.getElementById("bf").innerHTML='◼';djcs++;
