@@ -99,14 +99,14 @@ function playMusic(){
    var type = document.querySelector('[name="language_type"]:checked').value;
    if (type == "4") {//如果是俄语
        if(djcs<1){//防止过多点击重复播放，开始播放，修改按钮样式，累计数字+1
-          var music = new Audio("//tts.baidu.com/text2audio?cuid=baike&lan=ukr&ctp=1&pdt=301&vol=10&rate=4&spd=7&tex="+aa);
+          var music = new Audio("//fanyi.baidu.com/gettts?lan=ru&spd=7&text="+aa);
           music.play();document.getElementById("bf").innerHTML='◼';djcs++;
 	      //监听播放完毕，就修改按钮样式，累计数字归零
 	      music.onended = function() {document.getElementById("bf").innerHTML='▶';djcs=0;}
        }
    }else if (type == "5") {//如果是泰语
        if(djcs<1){//防止过多点击重复播放，开始播放，修改按钮样式，累计数字+1
-          var music = new Audio("//tts.baidu.com/text2audio?cuid=baike&lan=th&ctp=1&pdt=301&vol=10&rate=4&spd=7&tex="+aa);
+          var music = new Audio("//fanyi.baidu.com/gettts?lan=th&spd=7&text="+aa);
           music.play();document.getElementById("bf").innerHTML='◼';djcs++;
 	      //监听播放完毕，就修改按钮样式，累计数字归零
 	      music.onended = function() {document.getElementById("bf").innerHTML='▶';djcs=0;}
