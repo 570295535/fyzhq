@@ -25,7 +25,7 @@
         <div id="el"><textarea readonly="readonly" v-model="result" id="zhuan_ok" onclick="this.focus();this.select()"></textarea></div>
 		<br><div id="bf" onclick="playMusic()">▶</div>
 		
-		<p style="text-align:center;">当前语音引擎来自：有道、百度</p>
+		<p style="text-align:center;">当前语音引擎来自：有道</p>
 		<p style="text-align:center;">开源地址：<a target="_blank" href="https://github.com/570295535/fyzhq" >https://github.com/570295535/fyzhq</a></p>
     </div>
     <script src="./static/vue.global.min.js"></script>
@@ -50,24 +50,31 @@
                     let type = document.querySelector('[name="language_type"]:checked').value;
                     if (type == "0") {
                         cur_data = data['Japanese']
+						document.getElementById("bf").innerHTML='▶';
                     }
                     else if (type == "1") {
                         cur_data = data['German']
+						document.getElementById("bf").innerHTML='▶';
                     }
                     else if (type == "2") {
                         cur_data = data['French']
+						document.getElementById("bf").innerHTML='▶';
                     }
                     else if (type == "3") {
                         cur_data = data['Korean']
+						document.getElementById("bf").innerHTML='▶';
                     }
                     else if (type == "4") {
                         cur_data = data['Russian']
+						document.getElementById("bf").innerHTML='暂不支持播放俄语';
                     }
                     else if (type == "5") {
                         cur_data = data['Thai']
+						document.getElementById("bf").innerHTML='▶';
                     }
                     else if (type == "6") {
                         cur_data = data['English']
+						document.getElementById("bf").innerHTML='▶';
                     }
 
                     pinyin = pinyinUtil.getPinyin(input).split(" ");
@@ -94,31 +101,19 @@
 //点击播放就把转换的文字转语音播放
 var djcs=0;
 function playMusic(){
-   var aa=encodeURI(document.getElementById("zhuan_ok").value);//转换好的文字
-   if (!aa) {var aa=encodeURI("你还没有输入内容");}//如果是空的，就使用默认语音文字
-   var type = document.querySelector('[name="language_type"]:checked').value;
-   if (type == "4") {//如果是俄语
-       if(djcs<1){//防止过多点击重复播放，开始播放，修改按钮样式，累计数字+1
-          var music = new Audio("//fanyi.baidu.com/gettts?lan=ru&spd=7&text="+aa);
-          music.play();document.getElementById("bf").innerHTML='◼';djcs++;
-	      //监听播放完毕，就修改按钮样式，累计数字归零
-	      music.onended = function() {document.getElementById("bf").innerHTML='▶';djcs=0;}
-       }
-   }else if (type == "5") {//如果是泰语
-       if(djcs<1){//防止过多点击重复播放，开始播放，修改按钮样式，累计数字+1
-          var music = new Audio("//fanyi.baidu.com/gettts?lan=th&spd=7&text="+aa);
-          music.play();document.getElementById("bf").innerHTML='◼';djcs++;
-	      //监听播放完毕，就修改按钮样式，累计数字归零
-	      music.onended = function() {document.getElementById("bf").innerHTML='▶';djcs=0;}
-       }
-   }else{//如果是其他语言
-       if(djcs<1){//防止过多点击重复播放，开始播放，修改按钮样式，累计数字+1
-          var music = new Audio("//dict.youdao.com/dictvoice?audio="+aa+"&le=auto&sj="+new Date().getTime());
-          music.play();document.getElementById("bf").innerHTML='◼';djcs++;
-	      //监听播放完毕，就修改按钮样式，累计数字归零
-	      music.onended = function() {document.getElementById("bf").innerHTML='▶';djcs=0;}
-       }
-   }
+    var aa=encodeURI(document.getElementById("zhuan_ok").value);//转换好的文字
+    if (!aa) {var aa=encodeURI("你还没有输入内容");}//如果是空的，就使用默认语音文字
+    var type = document.querySelector('[name="language_type"]:checked').value;
+    if(djcs<1){//防止过多点击重复播放，开始播放，修改按钮样式，累计数字+1
+        if(type == "4"){
+			document.getElementById("bf").innerHTML='暂不支持播放俄语';
+		}else{
+		    var music = new Audio("//dict.youdao.com/dictvoice?audio="+aa+"&le=auto&sj="+new Date().getTime());
+            music.play();document.getElementById("bf").innerHTML='◼';djcs++;
+            //监听播放完毕，就修改按钮样式，累计数字归零
+            music.onended = function() {document.getElementById("bf").innerHTML='▶';djcs=0;}
+		}
+    }
 }
     </script>
 </body>
