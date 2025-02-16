@@ -3,8 +3,9 @@
 发音转换器，可将输入的中文，根据发音转换为相同声调的外语，以达到用外语说中文的效果。
   
   
-改进版使用地址：[https://fyzhq.xszxsz.v6.army/](http://fyzhq.xszxsz.v6.army/)
-备用(需翻墙)：[https://fyzhq.vercel.app/](https://fyzhq.vercel.app/)
+改进版使用地址：[http://fyzhq.xszxsz.v6.army/](http://fyzhq.xszxsz.v6.army/)
+  
+备用地址(需翻墙)：[https://fyzhq.vercel.app/](https://fyzhq.vercel.app/)
   
 改进：
   
